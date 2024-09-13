@@ -1,0 +1,5 @@
+fastapi[standard]
+tortoise-orm[asyncmy]
+pyjwt[crypto]
+passlib[bcrypt]
+pydantic_settings
