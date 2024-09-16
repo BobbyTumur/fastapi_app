@@ -1,9 +1,9 @@
-from config.settings import settings
+from config.enviroment import env
 from tortoise import Tortoise
 
 DATABASE_CONFIG = {
     "connections": {
-        "default": settings.database_url,
+        "default": env.database_url,
     },
     "apps": {
         "models": {
@@ -16,3 +16,6 @@ DATABASE_CONFIG = {
 async def init_db():
     await Tortoise.init(config=DATABASE_CONFIG)
     await Tortoise.generate_schemas()
+
+async def close_db():
+    await Tortoise.close_connections()
