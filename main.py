@@ -1,3 +1,4 @@
+import warnings
 from fastapi import FastAPI
 
 from config.database import init_db, close_db
@@ -11,11 +12,13 @@ async def lifespan(app: FastAPI):
     # Initialize the database
     await init_db()
     yield
-    # Close database connections
+    # Terminate the database 
     await close_db()
+
+warnings.filterwarnings("ignore", message=".*bcrypt*.", category=UserWarning)
 
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(auth_router, prefix="/auth")
-app.include_router(user_router, prefix="/user")
-app.include_router(admin_router, prefix="/admin")
+app.include_router(user_router, prefix="/api")
+app.include_router(admin_router, prefix="/api")
